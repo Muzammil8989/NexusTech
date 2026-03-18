@@ -67,5 +67,9 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
     font-family: "Montserrat", sans-serif;
+    cursor: none;
+  }
+  * {
+    cursor: none !important;
   }
 }

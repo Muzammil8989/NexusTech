@@ -41,11 +41,14 @@ function App() {
       </div>
 
       <AnimatedCursor
-        innerSize={10}
-        outerSize={10}
-        innerScale={2.5}
-        outerScale={10}
+        innerSize={8}
+        outerSize={35}
+        innerScale={1}
+        outerScale={1.5}
         color="37, 99, 235"
+        outerAlpha={0.3}
+        innerStyle={{ backgroundColor: "rgb(37,99,235)" }}
+        outerStyle={{ border: "2px solid rgb(37,99,235)", zIndex: 999999 }}
       />
       <div>
         <Navbar />

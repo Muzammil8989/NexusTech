@@ -13,13 +13,19 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
-  const [open,      setOpen]      = useState(false);
-  const [scrolled,  setScrolled]  = useState(false);
+  const [open,     setOpen]     = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handler);
-    return () => window.removeEventListener("scroll", handler);
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("scroll", onScroll);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -55,70 +61,76 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Desktop links */}
-          <ul className="nav-desktop" style={{ display: "flex", gap: 4, listStyle: "none", margin: 0, padding: 0 }}>
-            {NAV_LINKS.map(({ label, to }) => (
-              <li key={to}>
-                <Link
-                  to={to} smooth duration={500}
-                  style={{ padding: "7px 14px", borderRadius: 8, fontSize: 14, fontWeight: 500, color: "#475569", cursor: "pointer", display: "block", transition: "all .2s" }}
-                  onMouseEnter={e => Object.assign(e.currentTarget.style, { color: "#2563EB", background: "rgba(37,99,235,0.07)" })}
-                  onMouseLeave={e => Object.assign(e.currentTarget.style, { color: "#475569", background: "transparent" })}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {/* Desktop links — only rendered on desktop */}
+          {!isMobile && (
+            <ul style={{ display: "flex", gap: 4, listStyle: "none", margin: 0, padding: 0 }}>
+              {NAV_LINKS.map(({ label, to }) => (
+                <li key={to}>
+                  <Link
+                    to={to} smooth duration={500}
+                    style={{ padding: "7px 14px", borderRadius: 8, fontSize: 14, fontWeight: 500, color: "#475569", cursor: "pointer", display: "block", transition: "all .2s" }}
+                    onMouseEnter={e => Object.assign(e.currentTarget.style, { color: "#2563EB", background: "rgba(37,99,235,0.07)" })}
+                    onMouseLeave={e => Object.assign(e.currentTarget.style, { color: "#475569", background: "transparent" })}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
 
-          {/* Desktop CTA */}
-          <div className="nav-desktop" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <a href="#" style={{ fontSize: 14, fontWeight: 500, color: "#475569", textDecoration: "none" }}
-              onMouseEnter={e => e.target.style.color = "#2563EB"}
-              onMouseLeave={e => e.target.style.color = "#475569"}>
-              Login
-            </a>
-            <a href="#" style={{ padding: "8px 20px", borderRadius: 8, fontSize: 14, fontWeight: 600, color: "#fff", textDecoration: "none", background: "linear-gradient(135deg,#2563EB,#0EA5E9)", boxShadow: "0 4px 14px rgba(37,99,235,.30)", transition: "opacity .2s" }}
-              onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
-              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-              Sign Up
-            </a>
-          </div>
+          {/* Desktop CTA — only rendered on desktop */}
+          {!isMobile && (
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <a href="#" style={{ fontSize: 14, fontWeight: 500, color: "#475569", textDecoration: "none" }}
+                onMouseEnter={e => e.target.style.color = "#2563EB"}
+                onMouseLeave={e => e.target.style.color = "#475569"}>
+                Login
+              </a>
+              <a href="#" style={{ padding: "8px 20px", borderRadius: 8, fontSize: 14, fontWeight: 600, color: "#fff", textDecoration: "none", background: "linear-gradient(135deg,#2563EB,#0EA5E9)", boxShadow: "0 4px 14px rgba(37,99,235,.30)", transition: "opacity .2s" }}
+                onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                Sign Up
+              </a>
+            </div>
+          )}
 
-          {/* Hamburger — always flex via inline style, hidden on desktop via CSS class */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="nav-hamburger"
-            aria-label="menu"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 44,
-              height: 44,
-              borderRadius: 10,
-              border: "2px solid #2563EB",
-              background: open ? "rgba(37,99,235,.10)" : "rgba(37,99,235,.05)",
-              cursor: "pointer",
-              padding: 0,
-              outline: "none",
-            }}
-          >
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              {open ? (
-                <>
-                  <line x1="4" y1="4" x2="18" y2="18" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
-                  <line x1="18" y1="4" x2="4" y2="18" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
-                </>
-              ) : (
-                <>
-                  <line x1="3" y1="6"  x2="19" y2="6"  stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
-                  <line x1="3" y1="11" x2="19" y2="11" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
-                  <line x1="3" y1="16" x2="19" y2="16" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
-                </>
-              )}
-            </svg>
-          </button>
+          {/* Hamburger — only rendered on mobile */}
+          {isMobile && (
+            <button
+              onClick={() => setOpen(!open)}
+              aria-label="menu"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 44,
+                height: 44,
+                borderRadius: 10,
+                border: "2px solid #2563EB",
+                background: open ? "rgba(37,99,235,.10)" : "rgba(37,99,235,.05)",
+                cursor: "pointer",
+                padding: 0,
+                outline: "none",
+                flexShrink: 0,
+              }}
+            >
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                {open ? (
+                  <>
+                    <line x1="4" y1="4" x2="18" y2="18" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                    <line x1="18" y1="4" x2="4" y2="18" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                  </>
+                ) : (
+                  <>
+                    <line x1="3" y1="6"  x2="19" y2="6"  stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                    <line x1="3" y1="11" x2="19" y2="11" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                    <line x1="3" y1="16" x2="19" y2="16" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                  </>
+                )}
+              </svg>
+            </button>
+          )}
 
         </div>
       </nav>
