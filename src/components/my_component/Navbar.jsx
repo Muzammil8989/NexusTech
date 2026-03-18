@@ -15,11 +15,11 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [open,     setOpen]     = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1200);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
-    const onResize = () => setIsMobile(window.innerWidth < 768);
+    const onResize = () => setIsMobile(window.innerWidth < 1200);
     window.addEventListener("scroll", onScroll);
     window.addEventListener("resize", onResize);
     return () => {
@@ -135,68 +135,76 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile drawer */}
+      {/* Mobile full-screen menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            key="drawer"
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "tween", duration: 0.28 }}
+            key="fullmenu"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.22 }}
             style={{
               position: "fixed",
-              top: 0, right: 0, bottom: 0,
-              width: "min(300px, 85vw)",
-              background: "#fff",
-              zIndex: 10000,
-              boxShadow: "-8px 0 40px rgba(37,99,235,.15)",
+              inset: 0,
+              background: "linear-gradient(160deg,#f8faff 0%,#eff4ff 100%)",
+              zIndex: 9998,
               display: "flex",
               flexDirection: "column",
-              paddingTop: 72,
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 6,
+              padding: "80px 24px 40px",
             }}
           >
-            {/* Nav links — scrollable area */}
-            <div style={{ flex: 1, overflowY: "auto", padding: "8px 20px" }}>
-              {NAV_LINKS.map(({ label, to }, i) => (
-                <motion.div
-                  key={to}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+            {/* Nav links */}
+            {NAV_LINKS.map(({ label, to }, i) => (
+              <motion.div
+                key={to}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.06 }}
+                style={{ width: "100%", maxWidth: 320 }}
+              >
+                <Link
+                  to={to} smooth duration={500}
+                  onClick={() => setOpen(false)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "12px 0",
+                    fontSize: 18,
+                    fontWeight: 700,
+                    color: "#1E293B",
+                    cursor: "pointer",
+                    textAlign: "center",
+                    letterSpacing: "0.01em",
+                    borderBottom: "1px solid rgba(37,99,235,0.10)",
+                    transition: "color .2s",
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.color = "#2563EB"}
+                  onMouseLeave={e => e.currentTarget.style.color = "#1E293B"}
                 >
-                  <Link
-                    to={to} smooth duration={500}
-                    onClick={() => setOpen(false)}
-                    style={{
-                      display: "block",
-                      padding: "11px 14px",
-                      borderRadius: 10,
-                      fontSize: 15,
-                      fontWeight: 600,
-                      color: "#1E293B",
-                      cursor: "pointer",
-                      borderLeft: "3px solid transparent",
-                      transition: "all .2s",
-                    }}
-                    onMouseEnter={e => Object.assign(e.currentTarget.style, { color: "#2563EB", background: "rgba(37,99,235,.06)", borderLeftColor: "#2563EB" })}
-                    onMouseLeave={e => Object.assign(e.currentTarget.style, { color: "#1E293B", background: "transparent", borderLeftColor: "transparent" })}
-                  >
-                    {label}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
+                  {label}
+                </Link>
+              </motion.div>
+            ))}
 
-            {/* Buttons — always pinned at bottom */}
-            <div style={{ padding: "16px 20px 28px", borderTop: "1px solid #e2e8f0", display: "flex", flexDirection: "column", gap: 10 }}>
-              <a href="#" style={{ display: "block", padding: "12px 0", textAlign: "center", borderRadius: 10, fontSize: 15, fontWeight: 600, color: "#2563EB", border: "2px solid #2563EB", textDecoration: "none" }}>
+            {/* CTA buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              style={{ width: "100%", maxWidth: 320, display: "flex", gap: 12, marginTop: 20 }}
+            >
+              <a href="#" style={{ flex: 1, padding: "12px 0", textAlign: "center", borderRadius: 10, fontSize: 15, fontWeight: 600, color: "#2563EB", border: "2px solid #2563EB", textDecoration: "none" }}>
                 Login
               </a>
-              <a href="#" style={{ display: "block", padding: "12px 0", textAlign: "center", borderRadius: 10, fontSize: 15, fontWeight: 600, color: "#fff", textDecoration: "none", background: "linear-gradient(135deg,#2563EB,#0EA5E9)", boxShadow: "0 4px 14px rgba(37,99,235,.3)" }}>
+              <a href="#" style={{ flex: 1, padding: "12px 0", textAlign: "center", borderRadius: 10, fontSize: 15, fontWeight: 600, color: "#fff", textDecoration: "none", background: "linear-gradient(135deg,#2563EB,#0EA5E9)", boxShadow: "0 4px 14px rgba(37,99,235,.3)" }}>
                 Sign Up
               </a>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
