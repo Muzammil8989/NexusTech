@@ -177,13 +177,13 @@ const Home = () => {
                 <div className="w-56 h-56 lg:w-72 lg:h-72 rounded-full blur-3xl opacity-25"
                   style={{ background: "radial-gradient(circle,#2563EB,#0EA5E9)" }} />
               </div>
-              <div className="relative z-10">
+              <div className="relative">
                 <img src={banner} alt="NexusTech" className="w-52 md:w-64 lg:w-[280px] drop-shadow-2xl select-none" draggable={false} />
 
                 {/* Floating card top-left */}
                 <motion.div
                   animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-3 -left-4 bg-white dark:bg-card border border-border shadow-xl rounded-xl px-3 py-2 flex items-center gap-2 z-20"
+                  className="absolute -top-3 -left-4 bg-white dark:bg-card border border-border shadow-xl rounded-xl px-3 py-2 flex items-center gap-2"
                 >
                   <div className="w-7 h-7 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
                     <HiCheckCircle className="text-green-600 text-sm" />
@@ -197,7 +197,7 @@ const Home = () => {
                 {/* Floating card bottom-right */}
                 <motion.div
                   animate={{ y: [0, 10, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                  className="absolute -bottom-3 -right-4 bg-white dark:bg-card border border-border shadow-xl rounded-xl px-3 py-2 flex items-center gap-2 z-20"
+                  className="absolute -bottom-3 -right-4 bg-white dark:bg-card border border-border shadow-xl rounded-xl px-3 py-2 flex items-center gap-2"
                 >
                   <div className="w-7 h-7 rounded-lg bg-BrandPrimary/10 flex items-center justify-center flex-shrink-0">
                     <FaStar className="text-BrandPrimary text-xs" />
