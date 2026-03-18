@@ -73,7 +73,7 @@ const Home = () => {
   const slide = slides[active];
 
   return (
-    <div className="relative min-h-screen lg:h-screen lg:overflow-hidden bg-neutralSilver dark:bg-background flex items-center">
+    <div className="relative min-h-screen lg:h-screen overflow-hidden bg-neutralSilver flex items-center">
 
       {/* Background orbs */}
       <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-BrandPrimary opacity-10 blur-3xl pointer-events-none" />

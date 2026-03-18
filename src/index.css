@@ -68,6 +68,7 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     font-family: "Montserrat", sans-serif;
     cursor: none;
+    overflow-x: hidden;
   }
   * {
     cursor: none !important;
