@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-scroll";
 import { Button } from "../ui/button";
-import { Menu, X } from "lucide-react";
+import { HiBars3BottomRight, HiOutlineXMark } from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
@@ -82,7 +82,7 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="mobile-menu-btn items-center justify-center w-10 h-10 rounded-lg bg-neutralDGrey/10 border border-neutralDGrey/30 text-neutralDGrey hover:bg-BrandPrimary/10 transition-colors"
           >
-            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {isMenuOpen ? <HiOutlineXMark size={22} /> : <HiBars3BottomRight size={22} />}
           </button>
         </div>
       </nav>
