@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "./components/my_component/Navbar";
 import { Element } from "react-scroll";
 import Home from "./components/my_component/Home";
@@ -35,7 +34,7 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <>
       {/* Scroll progress bar */}
       <div className="fixed top-0 left-0 right-0 z-[200] h-[3px] pointer-events-none">
         <div ref={progressRef} className="h-full w-0" style={{ background: "linear-gradient(90deg,#2563EB,#0EA5E9)" }} />
@@ -70,7 +69,7 @@ function App() {
         </Element>
         <Fotter />
       </div>
-    </ThemeProvider>
+    </>
   );
 }
 
