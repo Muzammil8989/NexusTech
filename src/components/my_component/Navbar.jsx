@@ -78,7 +78,8 @@ const Navbar = () => {
           {/* Mobile hamburger */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="mobile-menu-btn items-center justify-center w-10 h-10 rounded-lg bg-neutralDGrey/10 border border-neutralDGrey/30 text-neutralDGrey hover:bg-BrandPrimary/10 transition-colors"
+            className="mobile-menu-btn items-center justify-center w-10 h-10 rounded-lg text-neutralDGrey transition-colors hover:text-BrandPrimary"
+            style={{ border: "1.5px solid #1E293B" }}
           >
             {isMenuOpen ? <HiOutlineXMark size={22} /> : <HiBars3BottomRight size={22} />}
           </button>
