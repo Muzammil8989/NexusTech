@@ -26,10 +26,8 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isSticky
-          ? "bg-white/95 backdrop-blur-md border-b border-border shadow-sm"
-          : "bg-white/80 backdrop-blur-sm"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-border ${
+        isSticky ? "shadow-md" : "shadow-none"
       }`}
     >
       <nav className="px-4 lg:px-20 max-w-screen-2xl mx-auto">
