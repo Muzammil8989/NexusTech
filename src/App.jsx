@@ -10,8 +10,6 @@ import Products from "./components/my_component/Product";
 import Blog from "./components/my_component/Blog";
 import Newsletter from "./components/my_component/Newsletter";
 import Fotter from "./components/my_component/Fotter";
-import "./App.css";
-
 import AnimatedCursor from "react-animated-cursor";
 
 gsap.registerPlugin(ScrollTrigger);
