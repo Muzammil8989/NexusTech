@@ -26,7 +26,8 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-border ${
+      style={{ zIndex: 10000 }}
+      className={`fixed top-0 left-0 right-0 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-border ${
         isSticky ? "shadow-md" : "shadow-none"
       }`}
     >
@@ -79,7 +80,7 @@ const Navbar = () => {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="mobile-menu-btn items-center justify-center w-10 h-10 rounded-lg text-neutralDGrey transition-colors hover:text-BrandPrimary"
-            style={{ border: "1.5px solid #1E293B" }}
+            style={{ border: "1.5px solid #1E293B", zIndex: 100000, position: "relative" }}
           >
             {isMenuOpen ? <HiOutlineXMark size={22} /> : <HiBars3BottomRight size={22} />}
           </button>
