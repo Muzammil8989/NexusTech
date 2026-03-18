@@ -80,7 +80,7 @@ const Navbar = () => {
           {/* Mobile hamburger */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex md:hidden items-center justify-center w-10 h-10 rounded-lg bg-neutralDGrey/10 border border-neutralDGrey/30 text-neutralDGrey hover:bg-BrandPrimary/10 transition-colors"
+            className="mobile-menu-btn items-center justify-center w-10 h-10 rounded-lg bg-neutralDGrey/10 border border-neutralDGrey/30 text-neutralDGrey hover:bg-BrandPrimary/10 transition-colors"
           >
             {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
