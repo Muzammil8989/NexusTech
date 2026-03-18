@@ -144,9 +144,9 @@ const Home = () => {
                   </Button>
                 </motion.div>
               </AnimatePresence>
-              <Button size="default" variant="outline" className="border-BrandPrimary/50 text-BrandPrimary hover:bg-BrandPrimary/10 dark:text-BrandSecondary dark:border-BrandSecondary/50 gap-2 px-5">
+              <Button size="default" variant="outline" className="border-BrandPrimary text-BrandPrimary hover:bg-BrandPrimary hover:text-white gap-2 px-5 transition-colors duration-200">
                 <div className="flex items-center justify-center w-5 h-5 rounded-full bg-BrandPrimary/10">
-                  <FaPlay className="text-[8px] text-BrandPrimary dark:text-BrandSecondary" />
+                  <FaPlay className="text-[8px] text-BrandPrimary group-hover:text-white" />
                 </div>
                 Watch Demo
               </Button>
