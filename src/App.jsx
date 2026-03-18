@@ -35,7 +35,7 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       {/* Scroll progress bar */}
       <div className="fixed top-0 left-0 right-0 z-[200] h-[3px] pointer-events-none">
         <div ref={progressRef} className="h-full w-0" style={{ background: "linear-gradient(90deg,#2563EB,#0EA5E9)" }} />
