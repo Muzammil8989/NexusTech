@@ -28,8 +28,8 @@ const Navbar = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isSticky
-          ? "bg-white/90 dark:bg-background/90 backdrop-blur-md border-b border-border shadow-sm"
-          : "bg-transparent"
+          ? "bg-white/95 backdrop-blur-md border-b border-border shadow-sm"
+          : "bg-white/80 backdrop-blur-sm"
       }`}
     >
       <nav className="px-4 lg:px-20 max-w-screen-2xl mx-auto">
@@ -80,7 +80,7 @@ const Navbar = () => {
           {/* Mobile hamburger */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-border text-neutralDGrey dark:text-white hover:bg-BrandPrimary/10 transition-colors"
+            className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-neutralDGrey/20 text-neutralDGrey hover:bg-BrandPrimary/10 transition-colors"
           >
             {isMenuOpen ? <HiOutlineXMark className="text-xl" /> : <HiBars3BottomRight className="text-xl" />}
           </button>
@@ -95,7 +95,7 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden bg-white dark:bg-card border-b border-border shadow-lg"
+            className="md:hidden overflow-hidden bg-white border-b border-border shadow-lg"
           >
             <div className="px-4 py-4 flex flex-col gap-1">
               {navItems.map(({ name, path }) => (
