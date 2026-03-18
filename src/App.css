@@ -1,10 +1,9 @@
-.mobile-menu-btn {
-  display: flex;
-}
+/* Navbar responsive */
 @media (min-width: 768px) {
-  .mobile-menu-btn {
-    display: none;
-  }
+  .nav-hamburger { display: none !important; }
+}
+@media (max-width: 767px) {
+  .nav-desktop { display: none !important; }
 }
 
 .Services_img img {

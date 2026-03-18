@@ -1,135 +1,202 @@
-import React, { useState, useEffect } from "react";
-import Logo from "../../assets/Logo.png";
+import { useState, useEffect } from "react";
 import { Link } from "react-scroll";
-import { Button } from "../ui/button";
-import { HiBars3BottomRight, HiOutlineXMark } from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
+import Logo from "../../assets/Logo.png";
 
-const navItems = [
-  { name: "Home",         path: "home" },
-  { name: "Services",     path: "services" },
-  { name: "About",        path: "about" },
-  { name: "Products",     path: "products" },
-  { name: "Testimonials", path: "testimonials" },
-  { name: "FAQ",          path: "faq" },
+const NAV_LINKS = [
+  { label: "Home",         to: "home" },
+  { label: "Services",     to: "services" },
+  { label: "About",        to: "about" },
+  { label: "Products",     to: "products" },
+  { label: "Testimonials", to: "testimonials" },
+  { label: "FAQ",          to: "faq" },
 ];
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSticky, setIsSticky] = useState(false);
+export default function Navbar() {
+  const [open,      setOpen]      = useState(false);
+  const [scrolled,  setScrolled]  = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsSticky(window.scrollY > 80);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handler = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   return (
-    <header
-      style={{ zIndex: 10000 }}
-      className={`fixed top-0 left-0 right-0 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-border ${
-        isSticky ? "shadow-md" : "shadow-none"
-      }`}
-    >
-      <nav className="px-4 lg:px-20 max-w-screen-2xl mx-auto">
-        <div className="flex items-center justify-between h-16">
+    <>
+      <nav
+        style={{
+          position: "fixed",
+          inset: "0 0 auto 0",
+          zIndex: 9999,
+          background: scrolled ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.80)",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          borderBottom: "1px solid rgba(37,99,235,0.12)",
+          boxShadow: scrolled ? "0 2px 20px rgba(37,99,235,0.10)" : "none",
+          transition: "all .3s ease",
+        }}
+      >
+        {/* gradient accent */}
+        <div style={{ height: 3, background: "linear-gradient(90deg,#2563EB,#0EA5E9)" }} />
+
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 uppercase font-bold text-base sm:text-xl">
-            <img
-              src={Logo}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover flex-shrink-0"
-              alt="NexusTech Logo"
-            />
-            <span className="text-neutralDGrey dark:text-white">NexusTech</span>
+          <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+            <img src={Logo} alt="logo" style={{ width: 38, height: 38, borderRadius: "50%", objectFit: "cover", border: "2px solid #2563EB" }} />
+            <span style={{ fontWeight: 800, fontSize: 17, letterSpacing: 1, background: "linear-gradient(135deg,#1E293B 40%,#2563EB)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              NEXUSTECH
+            </span>
           </a>
 
-          {/* Desktop nav links */}
-          <ul className="hidden md:flex items-center gap-4 lg:gap-8">
-            {navItems.map(({ name, path }) => (
-              <li key={name}>
+          {/* Desktop links */}
+          <ul className="nav-desktop" style={{ display: "flex", gap: 4, listStyle: "none", margin: 0, padding: 0 }}>
+            {NAV_LINKS.map(({ label, to }) => (
+              <li key={to}>
                 <Link
-                  to={path}
-                  smooth={true}
-                  duration={500}
-                  className="text-sm font-medium text-neutralGrey dark:text-gray-300 hover:text-BrandPrimary dark:hover:text-BrandSecondary transition-colors cursor-pointer"
+                  to={to} smooth duration={500}
+                  style={{ padding: "7px 14px", borderRadius: 8, fontSize: 14, fontWeight: 500, color: "#475569", cursor: "pointer", display: "block", transition: "all .2s" }}
+                  onMouseEnter={e => Object.assign(e.currentTarget.style, { color: "#2563EB", background: "rgba(37,99,235,0.07)" })}
+                  onMouseLeave={e => Object.assign(e.currentTarget.style, { color: "#475569", background: "transparent" })}
                 >
-                  {name}
+                  {label}
                 </Link>
               </li>
             ))}
           </ul>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="#"
-              className="text-sm font-medium text-neutralGrey dark:text-gray-300 hover:text-BrandPrimary dark:hover:text-BrandSecondary transition-colors"
-            >
+          <div className="nav-desktop" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <a href="#" style={{ fontSize: 14, fontWeight: 500, color: "#475569", textDecoration: "none" }}
+              onMouseEnter={e => e.target.style.color = "#2563EB"}
+              onMouseLeave={e => e.target.style.color = "#475569"}>
               Login
             </a>
-            <Button
-              size="sm"
-              className="bg-BrandPrimary hover:bg-BrandPrimary/90 text-white px-5 shadow-md shadow-BrandPrimary/20"
-            >
+            <a href="#" style={{ padding: "8px 20px", borderRadius: 8, fontSize: 14, fontWeight: 600, color: "#fff", textDecoration: "none", background: "linear-gradient(135deg,#2563EB,#0EA5E9)", boxShadow: "0 4px 14px rgba(37,99,235,.30)", transition: "opacity .2s" }}
+              onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
               Sign Up
-            </Button>
+            </a>
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Hamburger — always flex via inline style, hidden on desktop via CSS class */}
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="mobile-menu-btn items-center justify-center w-10 h-10 rounded-lg text-neutralDGrey transition-colors hover:text-BrandPrimary"
-            style={{ border: "1.5px solid #1E293B", zIndex: 100000, position: "relative" }}
+            onClick={() => setOpen(!open)}
+            className="nav-hamburger"
+            aria-label="menu"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 44,
+              height: 44,
+              borderRadius: 10,
+              border: "2px solid #2563EB",
+              background: open ? "rgba(37,99,235,.10)" : "rgba(37,99,235,.05)",
+              cursor: "pointer",
+              padding: 0,
+              outline: "none",
+            }}
           >
-            {isMenuOpen ? <HiOutlineXMark size={22} /> : <HiBars3BottomRight size={22} />}
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              {open ? (
+                <>
+                  <line x1="4" y1="4" x2="18" y2="18" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                  <line x1="18" y1="4" x2="4" y2="18" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="6"  x2="19" y2="6"  stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                  <line x1="3" y1="11" x2="19" y2="11" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                  <line x1="3" y1="16" x2="19" y2="16" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" />
+                </>
+              )}
+            </svg>
           </button>
+
         </div>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile drawer */}
       <AnimatePresence>
-        {isMenuOpen && (
+        {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden bg-white border-b border-border shadow-lg"
+            key="drawer"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "tween", duration: 0.28 }}
+            style={{
+              position: "fixed",
+              top: 0, right: 0, bottom: 0,
+              width: "min(320px, 85vw)",
+              background: "#fff",
+              zIndex: 10000,
+              boxShadow: "-8px 0 40px rgba(37,99,235,.15)",
+              display: "flex",
+              flexDirection: "column",
+              padding: "80px 24px 32px",
+              gap: 4,
+            }}
           >
-            <div className="px-4 py-4 flex flex-col gap-1">
-              {navItems.map(({ name, path }) => (
+            {NAV_LINKS.map(({ label, to }, i) => (
+              <motion.div
+                key={to}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.06 }}
+              >
                 <Link
-                  to={path}
-                  key={name}
-                  smooth={true}
-                  duration={500}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-sm font-medium text-neutralDGrey dark:text-white hover:text-BrandPrimary dark:hover:text-BrandSecondary hover:bg-BrandPrimary/5 py-2.5 px-3 rounded-lg transition-colors cursor-pointer"
+                  to={to} smooth duration={500}
+                  onClick={() => setOpen(false)}
+                  style={{
+                    display: "block",
+                    padding: "13px 16px",
+                    borderRadius: 10,
+                    fontSize: 15,
+                    fontWeight: 600,
+                    color: "#1E293B",
+                    cursor: "pointer",
+                    borderLeft: "3px solid transparent",
+                    transition: "all .2s",
+                  }}
+                  onMouseEnter={e => Object.assign(e.currentTarget.style, { color: "#2563EB", background: "rgba(37,99,235,.06)", borderLeftColor: "#2563EB" })}
+                  onMouseLeave={e => Object.assign(e.currentTarget.style, { color: "#1E293B", background: "transparent", borderLeftColor: "transparent" })}
                 >
-                  {name}
+                  {label}
                 </Link>
-              ))}
-              <div className="flex items-center gap-3 pt-3 border-t border-border mt-2">
-                <a
-                  href="#"
-                  className="text-sm font-medium text-neutralGrey dark:text-gray-300 hover:text-BrandPrimary transition-colors"
-                >
-                  Login
-                </a>
-                <Button
-                  size="sm"
-                  className="bg-BrandPrimary hover:bg-BrandPrimary/90 text-white px-5"
-                >
-                  Sign Up
-                </Button>
-              </div>
+              </motion.div>
+            ))}
+
+            <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 10 }}>
+              <a href="#" style={{ display: "block", padding: "12px 0", textAlign: "center", borderRadius: 10, fontSize: 15, fontWeight: 600, color: "#2563EB", border: "2px solid #2563EB", textDecoration: "none" }}>
+                Login
+              </a>
+              <a href="#" style={{ display: "block", padding: "12px 0", textAlign: "center", borderRadius: 10, fontSize: 15, fontWeight: 600, color: "#fff", textDecoration: "none", background: "linear-gradient(135deg,#2563EB,#0EA5E9)", boxShadow: "0 4px 14px rgba(37,99,235,.3)" }}>
+                Sign Up
+              </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
-  );
-};
 
-export default Navbar;
+      {/* overlay */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="overlay"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={() => setOpen(false)}
+            style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.35)", zIndex: 9999 }}
+          />
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
