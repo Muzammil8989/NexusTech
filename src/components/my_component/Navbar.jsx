@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../../assets/Logo.png";
 
@@ -11,6 +10,10 @@ const NAV_LINKS = [
   { label: "Testimonials", to: "testimonials" },
   { label: "FAQ",          to: "faq" },
 ];
+
+const scrollTo = (id) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+};
 
 export default function Navbar() {
   const [open,     setOpen]     = useState(false);
@@ -66,14 +69,14 @@ export default function Navbar() {
             <ul style={{ display: "flex", gap: 4, listStyle: "none", margin: 0, padding: 0 }}>
               {NAV_LINKS.map(({ label, to }) => (
                 <li key={to}>
-                  <Link
-                    to={to} smooth duration={500}
+                  <span
+                    onClick={() => scrollTo(to)}
                     style={{ padding: "7px 14px", borderRadius: 8, fontSize: 14, fontWeight: 500, color: "#475569", cursor: "pointer", display: "block", transition: "all .2s" }}
                     onMouseEnter={e => Object.assign(e.currentTarget.style, { color: "#2563EB", background: "rgba(37,99,235,0.07)" })}
                     onMouseLeave={e => Object.assign(e.currentTarget.style, { color: "#475569", background: "transparent" })}
                   >
                     {label}
-                  </Link>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -166,9 +169,8 @@ export default function Navbar() {
                 transition={{ delay: i * 0.06 }}
                 style={{ width: "100%", maxWidth: 320 }}
               >
-                <Link
-                  to={to} smooth duration={500}
-                  onClick={() => setOpen(false)}
+                <span
+                  onClick={() => { scrollTo(to); setOpen(false); }}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -187,7 +189,7 @@ export default function Navbar() {
                   onMouseLeave={e => e.currentTarget.style.color = "#1E293B"}
                 >
                   {label}
-                </Link>
+                </span>
               </motion.div>
             ))}
 
@@ -216,7 +218,7 @@ export default function Navbar() {
             key="overlay"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setOpen(false)}
-            style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.35)", zIndex: 9999 }}
+            style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.35)", zIndex: 9997 }}
           />
         )}
       </AnimatePresence>

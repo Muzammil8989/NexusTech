@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "./components/my_component/Navbar";
-import { Element } from "react-scroll";
 import Home from "./components/my_component/Home";
 import Services from "./components/my_component/Services";
 import About from "./components/my_component/About";
@@ -50,24 +49,12 @@ function App() {
       />
       <div>
         <Navbar />
-        <Element name="home">
-          <Home />
-        </Element>
-        <Element name="services">
-          <Services />
-        </Element>
-        <Element name="about">
-          <About />
-        </Element>
-        <Element name="products">
-          <Products />
-        </Element>
-        <Element name="testimonials">
-          <Blog />
-        </Element>
-        <Element name="faq">
-          <Newsletter />
-        </Element>
+        <div id="home"><Home /></div>
+        <div id="services"><Services /></div>
+        <div id="about"><About /></div>
+        <div id="products"><Products /></div>
+        <div id="testimonials"><Blog /></div>
+        <div id="faq"><Newsletter /></div>
         <Fotter />
       </div>
     </>
